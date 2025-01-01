@@ -1,0 +1,54 @@
+name: devpacks-site
+
+on:
+  push:
+    branches: ["master"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install-devpacks
+        run: |
+          DEVPACKS_VERSION=0.8.0.3
+          wget --no-verbose "https://mirror1.devpacks.org/packages/devpacks/devpacks-${DEVPACKS_VERSION}-linux-x86_64.tar.gz"
+          tar -xvf "devpacks-${DEVPACKS_VERSION}-linux-x86_64.tar.gz"
+          mv "devpacks-${DEVPACKS_VERSION}-linux-x86_64/bin/devpacks" /usr/local/bin
+          devpacks --version
+
+      - name: build
+        run: |
+          ./scripts/build.sh
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy-pages:
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
