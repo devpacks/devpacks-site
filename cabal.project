@@ -1,0 +1,7 @@
+packages: devpacks-site.cabal
+
+extra-packages: cabal-fmt==0.1.12
+
+allow-newer: cabal-fmt:base
+allow-newer: cabal-fmt:containers
+allow-newer: cabal-fmt:filepath

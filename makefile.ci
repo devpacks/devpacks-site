@@ -1,0 +1,10 @@
+.PHONY: all
+all : build cabal_fmt
+
+.PHONY: build
+build :
+	cabal build all --ghc-options='-Werror'
+
+.PHONY: cabal_fmt
+cabal_fmt :
+	./scripts/cabal_fmt_check.sh
