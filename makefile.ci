@@ -1,5 +1,5 @@
 .PHONY: all
-all : build cabal_fmt
+all : build cabal_fmt ormolu
 
 .PHONY: build
 build :
@@ -8,3 +8,7 @@ build :
 .PHONY: cabal_fmt
 cabal_fmt :
 	./scripts/cabal_fmt_check.sh
+
+.PHONY: ormolu
+ormolu :
+	./scripts/ormolu_check.sh

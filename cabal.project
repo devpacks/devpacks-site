@@ -5,3 +5,5 @@ extra-packages: cabal-fmt==0.1.12
 allow-newer: cabal-fmt:base
 allow-newer: cabal-fmt:containers
 allow-newer: cabal-fmt:filepath
+
+extra-packages: ormolu==0.7.7.0
