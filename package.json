@@ -3,6 +3,7 @@
   "version": "0.1.0.0",
   "description": "",
   "dependencies": {
+    "js-beautify": "1.15.3",
     "prettier": "3.5.1"
   }
 }

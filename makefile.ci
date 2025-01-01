@@ -1,5 +1,5 @@
 .PHONY: all
-all : build prettier cabal_fmt ormolu weeder
+all : build prettier js_beautify cabal_fmt ormolu weeder
 
 .PHONY: clean
 clean :
@@ -12,6 +12,10 @@ build : clean
 .PHONY: prettier
 prettier :
 	./scripts/prettier_check.sh
+
+.PHONY: js_beautify
+js_beautify :
+	./scripts/js_beautify_check.sh
 
 .PHONY: cabal_fmt
 cabal_fmt : clean
