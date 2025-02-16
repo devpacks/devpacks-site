@@ -1,0 +1,3 @@
+roots = ["^Main.main$"]
+
+root-instances = [{ class = '\.Show$' }, { class = '\.Ord$' }]

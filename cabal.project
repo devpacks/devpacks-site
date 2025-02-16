@@ -1,9 +1,20 @@
 packages: devpacks-site.cabal
 
+-- For "weeder"
+package devpacks-site
+  ghc-options: -fwrite-ide-info
+
 extra-packages: cabal-fmt==0.1.12
 
 allow-newer: cabal-fmt:base
 allow-newer: cabal-fmt:containers
 allow-newer: cabal-fmt:filepath
+
+extra-packages: weeder==2.9.0
+
+allow-newer: weeder:base
+allow-newer: weeder:containers
+allow-newer: weeder:filepath
+allow-newer: weeder:ghc
 
 extra-packages: ormolu==0.7.7.0

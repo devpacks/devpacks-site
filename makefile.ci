@@ -1,14 +1,22 @@
 .PHONY: all
-all : build cabal_fmt ormolu
+all : build cabal_fmt ormolu weeder
+
+.PHONY: clean
+clean :
+	./scripts/clean.sh
 
 .PHONY: build
-build :
+build : clean
 	cabal build all --ghc-options='-Werror'
 
 .PHONY: cabal_fmt
-cabal_fmt :
+cabal_fmt : clean
 	./scripts/cabal_fmt_check.sh
 
 .PHONY: ormolu
-ormolu :
+ormolu : clean
 	./scripts/ormolu_check.sh
+
+.PHONY: weeder
+weeder : build
+	./scripts/weeder.sh
