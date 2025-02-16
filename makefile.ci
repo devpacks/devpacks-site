@@ -1,5 +1,5 @@
 .PHONY: all
-all : build cabal_fmt ormolu weeder
+all : build prettier cabal_fmt ormolu weeder
 
 .PHONY: clean
 clean :
@@ -8,6 +8,10 @@ clean :
 .PHONY: build
 build : clean
 	cabal build all --ghc-options='-Werror'
+
+.PHONY: prettier
+prettier :
+	./scripts/prettier_check.sh
 
 .PHONY: cabal_fmt
 cabal_fmt : clean

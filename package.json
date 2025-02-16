@@ -1,0 +1,8 @@
+{
+  "name": "devpacks-site",
+  "version": "0.1.0.0",
+  "description": "",
+  "dependencies": {
+    "prettier": "3.5.1"
+  }
+}
