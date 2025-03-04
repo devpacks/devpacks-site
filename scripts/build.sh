@@ -14,4 +14,4 @@ ZLIB_PATH=$(devpacks pkg-path zlib)
 export PKG_CONFIG_PATH="${ZLIB_PATH}"/lib/pkgconfig
 
 "$CABAL" update
-"$CABAL" --with-ghc="$GHC" --with-pkg-config="$PKG_CONFIG" run site -- build
+"$CABAL" --with-ghc="$GHC" --with-pkg-config="$PKG_CONFIG" build all --ghc-options='-Werror'

@@ -2,6 +2,8 @@
 
 # See: <https://github.com/beautifier/js-beautify/issues/741#issuecomment-366722895>
 
+NODE=$(devpacks pkg-path node -p node)
+
 APPDIR="$(realpath "$(dirname "$(dirname "$0")")")"
 TMPDIR=$(mktemp -d)
 cd "$APPDIR" || exit 1
@@ -13,7 +15,7 @@ for line in $(find . -name '*.html' -not -path "./_site/*"); do
   cp "$APPDIR"/"$file" "$TMPDIR"/"$file"
 done
 
-message=$(find "$TMPDIR" -type f | xargs ./node_modules/.bin/js-beautify --replace --config jsbeautifyrc --type html | grep -v unchanged || true)
+message=$(find "$TMPDIR" -type f | xargs "$NODE" ./node_modules/.bin/js-beautify --replace --config jsbeautifyrc --type html | grep -v unchanged || true)
 if [[ $message ]]; then
   echo "$message" | sed "s#$TMPDIR##g" | sed "s#\.\.\/##g"
   rm -rf "$TMPDIR"

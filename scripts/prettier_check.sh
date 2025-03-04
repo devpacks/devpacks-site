@@ -2,4 +2,6 @@
 
 set -ex
 
-./node_modules/.bin/prettier --check .
+NODE=$(devpacks pkg-path node -p node)
+
+"$NODE" ./node_modules/.bin/prettier --check .

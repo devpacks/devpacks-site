@@ -2,23 +2,14 @@ name: devpacks-site
 
 on:
   push:
-    branches: ["master"]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches: "**"
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,24 +22,34 @@ jobs:
           mv "devpacks-${DEVPACKS_VERSION}-linux-x86_64/bin/devpacks" /usr/local/bin
           devpacks --version
 
+      - name: clean
+        run: |
+          ./scripts/clean.sh
+
       - name: build
         run: |
-          ./scripts/build_site.sh
+          ./scripts/build.sh
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site
+      - name: npm_install
+        run: |
+          ./scripts/npm_install.sh
 
-  deploy-pages:
-    needs: build
+      - name: prettier
+        run: |
+          ./scripts/prettier_check.sh
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      - name: js_beautify
+        run: |
+          ./scripts/js_beautify_check.sh
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: cabal_fmt
+        run: |
+          ./scripts/cabal_fmt_check.sh
+
+      - name: ormolu
+        run: |
+          ./scripts/ormolu_check.sh
+
+      - name: weeder
+        run: |
+          ./scripts/weeder.sh

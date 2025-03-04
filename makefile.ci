@@ -7,14 +7,18 @@ clean :
 
 .PHONY: build
 build : clean
-	cabal build all --ghc-options='-Werror'
+	./scripts/build.sh
+
+.PHONY: npm_install
+npm_install :
+	./scripts/npm_install.sh
 
 .PHONY: prettier
-prettier :
+prettier : npm_install
 	./scripts/prettier_check.sh
 
 .PHONY: js_beautify
-js_beautify :
+js_beautify : npm_install
 	./scripts/js_beautify_check.sh
 
 .PHONY: cabal_fmt
